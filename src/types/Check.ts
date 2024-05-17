@@ -1,8 +1,8 @@
 export type Check = {
   CheckNumber: string;
   CheckAmount: string;
-  DepositDate: string;
+  DepositeDate: string;
   BankName: string;
-  ClientName: string;
-  DepositStatus: string;
+  Client: string;
+  DepositeStatus: string;
 };

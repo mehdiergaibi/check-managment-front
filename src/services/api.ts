@@ -5,9 +5,9 @@ const URL = process.env.URI_API;
 // get checks
 export const getChecks = async () => {
   axios
-    .get(`${URL}/check`)
+    .get(`${URL}checks`)
     .then((response) => {
-      console.log(response.data);
+      //console.log(response.data);
       return response;
     })
     .catch((error) => {
@@ -19,6 +19,7 @@ export const getChecks = async () => {
 export const getClients = async () => {
   try {
     const response = await axios.get(`${URL}/clients`);
+    //console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error getting clients:", error);
