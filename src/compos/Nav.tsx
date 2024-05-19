@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { IoMenu } from "react-icons/io5";
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import { ThemeToggle } from "@/components/ui/mode-toggle";
 
 const pages = [
   {
@@ -57,6 +58,9 @@ const Nav = () => {
               </Link>
             </li>
           ))}
+          <li>
+            <ThemeToggle className="ml-1 md:ml-4" />
+          </li>
         </ul>
       </div>
     </div>

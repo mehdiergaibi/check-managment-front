@@ -30,7 +30,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ThemeToggle } from "@/components/ui/mode-toggle";
 import { dowloadExcel } from "@/lib/excelCheck";
 import { dt } from "./page";
 import {
@@ -135,7 +134,7 @@ function Checks<TData, TValue>({
           >
             Export To Excel
           </Button>
-          <ThemeToggle className="ml-1 md:ml-4" />
+
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Button variant="outline" className="ml-1 md:ml-4">

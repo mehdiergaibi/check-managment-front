@@ -41,7 +41,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ThemeToggle } from "@/components/ui/mode-toggle";
 import { dowloadExcel } from "@/lib/excelClients";
 import { clients } from "./PageClients";
 interface DataTableProps<TData, TValue> {
@@ -92,7 +91,6 @@ function Clients<TData, TValue>({
           >
             Export To Excel
           </Button>
-          <ThemeToggle className="ml-1 md:ml-4" />
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Button variant="outline" className="ml-1 md:ml-4">
