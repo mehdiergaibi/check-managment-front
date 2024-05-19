@@ -1,15 +1,15 @@
-import { dt } from "@/compos/pages/checks/page";
 import xlsx, { IJsonSheet } from "json-as-xlsx";
-export function dowloadExcel() {
+export function dowloadExcel(dt: any, file: string, sheet: string) {
   let columns: IJsonSheet[] = [
     {
-      sheet: "Checks",
+      sheet: sheet,
       columns: [
         { label: "Client", value: "Client" },
         { label: "Check Amount", value: "CheckAmount" },
         {
           label: "Deposite Date",
-          value: (row) => new Date(row.DepositeDate).toLocaleDateString(),
+          value: (row) =>
+            new Date(row.DepositeDate as string).toLocaleDateString(),
         },
         { label: "Deposite Status", value: "DepositeStatus" },
         { label: "Bank Name", value: "BankName" },
@@ -19,7 +19,7 @@ export function dowloadExcel() {
     },
   ];
   let settings = {
-    fileName: "Checks",
+    fileName: file,
   };
   xlsx(columns, settings);
 }

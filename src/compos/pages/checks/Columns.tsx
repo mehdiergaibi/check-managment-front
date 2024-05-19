@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
+import DeleteDialoge from "@/compos/DeleteDialoge";
 import { Check } from "@/types/Check";
 import { ColumnDef } from "@tanstack/react-table";
-import { AiFillDelete } from "react-icons/ai";
-import { MdModeEditOutline } from "react-icons/md";
 import { RiExpandUpDownFill } from "react-icons/ri";
+import EditCheck from "./EditCheck";
+import { cn } from "@/lib/utils";
 
 export const CheckColums: ColumnDef<Check>[] = [
   {
@@ -56,6 +57,19 @@ export const CheckColums: ColumnDef<Check>[] = [
   {
     header: "Deposite Status",
     accessorKey: "DepositeStatus",
+    cell: ({ row }) => {
+      return (
+        <div
+          className={cn("font-[16px] text-black w-fit px-4 py-2 rounded-lg", {
+            "bg-red-500": row.getValue("DepositeStatus") === "Not Deposited",
+            "bg-orange-500": row.getValue("DepositeStatus") === "Pending",
+            "bg-green-500": row.getValue("DepositeStatus") === "Deposited",
+          })}
+        >
+          {row.getValue("DepositeStatus")}
+        </div>
+      );
+    },
   },
   {
     header: "Bank Name",
@@ -70,11 +84,8 @@ export const CheckColums: ColumnDef<Check>[] = [
     cell: () => {
       return (
         <div className="flex">
-          <AiFillDelete size={25} className="text-red-500 cursor-pointer" />
-          <MdModeEditOutline
-            size={25}
-            className="text-[#00df9a] ml-4 cursor-pointer"
-          />
+          <DeleteDialoge desc="This action cannot be undone. This will permanently delete this check and remove its data from our servers." />
+          <EditCheck />
         </div>
       );
     },

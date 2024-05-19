@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { getChecks } from "@/services/api";
+/* import { useEffect, useState } from "react";
+import { getChecks } from "@/services/api"; */
 import Checks from "./Checks";
 import { CheckColums } from "./Columns";
 import { Check } from "@/types/Check";
@@ -11,7 +11,7 @@ export const dt: Check[] = [
     DepositeDate: "4/8/2024",
     BankName: "400SE",
     Client: "Lyséa",
-    DepositeStatus: "deposited",
+    DepositeStatus: "Deposited",
   },
   {
     CheckNumber: "3561328491220240",
@@ -19,7 +19,7 @@ export const dt: Check[] = [
     DepositeDate: "3/4/2024",
     BankName: "XC90",
     Client: "Anaé",
-    DepositeStatus: "deposited",
+    DepositeStatus: "Deposited",
   },
   {
     CheckNumber: "3535301374450468",
@@ -27,7 +27,7 @@ export const dt: Check[] = [
     DepositeDate: "1/1/2024",
     BankName: "Ram Van 1500",
     Client: "Bérengère",
-    DepositeStatus: "deposited",
+    DepositeStatus: "Deposited",
   },
   {
     CheckNumber: "5007666297416224",
@@ -35,7 +35,7 @@ export const dt: Check[] = [
     DepositeDate: "11/7/2023",
     BankName: "Tundra",
     Client: "Eugénie",
-    DepositeStatus: "notdeposited",
+    DepositeStatus: "Not Deposited",
   },
   {
     CheckNumber: "3563378464635336",
@@ -43,7 +43,7 @@ export const dt: Check[] = [
     DepositeDate: "7/2/2023",
     BankName: "Envoy",
     Client: "Dù",
-    DepositeStatus: "pending",
+    DepositeStatus: "Pending",
   },
   {
     CheckNumber: "3542098250608364",
@@ -51,7 +51,7 @@ export const dt: Check[] = [
     DepositeDate: "7/24/2023",
     BankName: "J",
     Client: "Rébecca",
-    DepositeStatus: "pending",
+    DepositeStatus: "Pending",
   },
   {
     CheckNumber: "6762359413176657287",
@@ -59,7 +59,7 @@ export const dt: Check[] = [
     DepositeDate: "10/9/2023",
     BankName: "E-Class",
     Client: "Almérinda",
-    DepositeStatus: "notdeposited",
+    DepositeStatus: "Not Deposited",
   },
   {
     CheckNumber: "5100144432212649",
@@ -67,7 +67,7 @@ export const dt: Check[] = [
     DepositeDate: "6/11/2023",
     BankName: "XC70",
     Client: "Rachèle",
-    DepositeStatus: "notdeposited",
+    DepositeStatus: "Not Deposited",
   },
   {
     CheckNumber: "NEW_CHECK_NUMBER",
@@ -75,7 +75,7 @@ export const dt: Check[] = [
     DepositeDate: "NEW_DEPOSIT_DATE",
     BankName: "NEW_BANK_NAME",
     Client: "NEW_CLIENT_NAME",
-    DepositeStatus: "NEW_DEPOSIT_STATUS",
+    DepositeStatus: "Deposited",
   },
   {
     CheckNumber: "6383112302276529",
@@ -83,7 +83,7 @@ export const dt: Check[] = [
     DepositeDate: "4/8/2024",
     BankName: "400SE",
     Client: "Lyséa",
-    DepositeStatus: "deposited",
+    DepositeStatus: "Deposited",
   },
   {
     CheckNumber: "3561328491220240",
@@ -91,7 +91,7 @@ export const dt: Check[] = [
     DepositeDate: "3/4/2024",
     BankName: "XC90",
     Client: "Anaé",
-    DepositeStatus: "deposited",
+    DepositeStatus: "Deposited",
   },
   {
     CheckNumber: "3535301374450468",
@@ -99,7 +99,7 @@ export const dt: Check[] = [
     DepositeDate: "1/1/2024",
     BankName: "Ram Van 1500",
     Client: "Bérengère",
-    DepositeStatus: "deposited",
+    DepositeStatus: "Deposited",
   },
   {
     CheckNumber: "5007666297416224",
@@ -107,7 +107,7 @@ export const dt: Check[] = [
     DepositeDate: "11/7/2023",
     BankName: "Tundra",
     Client: "Eugénie",
-    DepositeStatus: "notdeposited",
+    DepositeStatus: "Not Deposited",
   },
   {
     CheckNumber: "3563378464635336",
@@ -115,7 +115,7 @@ export const dt: Check[] = [
     DepositeDate: "7/2/2023",
     BankName: "Envoy",
     Client: "Dù",
-    DepositeStatus: "pending",
+    DepositeStatus: "Pending",
   },
   {
     CheckNumber: "3542098250608364",
@@ -123,7 +123,7 @@ export const dt: Check[] = [
     DepositeDate: "7/24/2023",
     BankName: "J",
     Client: "Rébecca",
-    DepositeStatus: "pending",
+    DepositeStatus: "Pending",
   },
   {
     CheckNumber: "6762359413176657287",
@@ -131,7 +131,7 @@ export const dt: Check[] = [
     DepositeDate: "10/9/2023",
     BankName: "E-Class",
     Client: "Almérinda",
-    DepositeStatus: "notdeposited",
+    DepositeStatus: "Not Deposited",
   },
   {
     CheckNumber: "5100144432212649",
@@ -139,7 +139,7 @@ export const dt: Check[] = [
     DepositeDate: "6/11/2023",
     BankName: "XC70",
     Client: "Rachèle",
-    DepositeStatus: "notdeposited",
+    DepositeStatus: "Not Deposited",
   },
   {
     CheckNumber: "NEW_CHECK_NUMBER",
@@ -147,7 +147,7 @@ export const dt: Check[] = [
     DepositeDate: "NEW_DEPOSIT_DATE",
     BankName: "NEW_BANK_NAME",
     Client: "NEW_CLIENT_NAME",
-    DepositeStatus: "NEW_DEPOSIT_STATUS",
+    DepositeStatus: "Deposited",
   },
   {
     CheckNumber: "6383112302276529",
@@ -155,7 +155,7 @@ export const dt: Check[] = [
     DepositeDate: "4/8/2024",
     BankName: "400SE",
     Client: "Lyséa",
-    DepositeStatus: "deposited",
+    DepositeStatus: "Deposited",
   },
   {
     CheckNumber: "3561328491220240",
@@ -163,7 +163,7 @@ export const dt: Check[] = [
     DepositeDate: "3/4/2024",
     BankName: "XC90",
     Client: "Anaé",
-    DepositeStatus: "deposited",
+    DepositeStatus: "Deposited",
   },
   {
     CheckNumber: "3535301374450468",
@@ -171,7 +171,7 @@ export const dt: Check[] = [
     DepositeDate: "1/1/2024",
     BankName: "Ram Van 1500",
     Client: "Bérengère",
-    DepositeStatus: "deposited",
+    DepositeStatus: "Deposited",
   },
   {
     CheckNumber: "5007666297416224",
@@ -179,7 +179,7 @@ export const dt: Check[] = [
     DepositeDate: "11/7/2023",
     BankName: "Tundra",
     Client: "Eugénie",
-    DepositeStatus: "notdeposited",
+    DepositeStatus: "Not Deposited",
   },
   {
     CheckNumber: "3563378464635336",
@@ -187,7 +187,7 @@ export const dt: Check[] = [
     DepositeDate: "7/2/2023",
     BankName: "Envoy",
     Client: "Dù",
-    DepositeStatus: "pending",
+    DepositeStatus: "Pending",
   },
   {
     CheckNumber: "3542098250608364",
@@ -195,7 +195,7 @@ export const dt: Check[] = [
     DepositeDate: "7/24/2023",
     BankName: "J",
     Client: "Rébecca",
-    DepositeStatus: "pending",
+    DepositeStatus: "Pending",
   },
   {
     CheckNumber: "6762359413176657287",
@@ -203,7 +203,7 @@ export const dt: Check[] = [
     DepositeDate: "10/9/2023",
     BankName: "E-Class",
     Client: "Almérinda",
-    DepositeStatus: "notdeposited",
+    DepositeStatus: "Not Deposited",
   },
   {
     CheckNumber: "5100144432212649",
@@ -211,7 +211,7 @@ export const dt: Check[] = [
     DepositeDate: "6/11/2023",
     BankName: "XC70",
     Client: "Rachèle",
-    DepositeStatus: "notdeposited",
+    DepositeStatus: "Not Deposited",
   },
   {
     CheckNumber: "NEW_CHECK_NUMBER",
@@ -219,7 +219,7 @@ export const dt: Check[] = [
     DepositeDate: "NEW_DEPOSIT_DATE",
     BankName: "NEW_BANK_NAME",
     Client: "NEW_CLIENT_NAME",
-    DepositeStatus: "NEW_DEPOSIT_STATUS",
+    DepositeStatus: "Deposited",
   },
   {
     CheckNumber: "6383112302276529",
@@ -227,7 +227,7 @@ export const dt: Check[] = [
     DepositeDate: "4/8/2024",
     BankName: "400SE",
     Client: "Lyséa",
-    DepositeStatus: "deposited",
+    DepositeStatus: "Deposited",
   },
   {
     CheckNumber: "3561328491220240",
@@ -235,7 +235,7 @@ export const dt: Check[] = [
     DepositeDate: "3/4/2024",
     BankName: "XC90",
     Client: "Anaé",
-    DepositeStatus: "deposited",
+    DepositeStatus: "Deposited",
   },
   {
     CheckNumber: "3535301374450468",
@@ -243,7 +243,7 @@ export const dt: Check[] = [
     DepositeDate: "1/1/2024",
     BankName: "Ram Van 1500",
     Client: "Bérengère",
-    DepositeStatus: "deposited",
+    DepositeStatus: "Deposited",
   },
   {
     CheckNumber: "5007666297416224",
@@ -251,7 +251,7 @@ export const dt: Check[] = [
     DepositeDate: "11/7/2023",
     BankName: "Tundra",
     Client: "Eugénie",
-    DepositeStatus: "notdeposited",
+    DepositeStatus: "Not Deposited",
   },
   {
     CheckNumber: "3563378464635336",
@@ -259,7 +259,7 @@ export const dt: Check[] = [
     DepositeDate: "7/2/2023",
     BankName: "Envoy",
     Client: "Dù",
-    DepositeStatus: "pending",
+    DepositeStatus: "Pending",
   },
   {
     CheckNumber: "3542098250608364",
@@ -267,7 +267,7 @@ export const dt: Check[] = [
     DepositeDate: "7/24/2023",
     BankName: "J",
     Client: "Rébecca",
-    DepositeStatus: "pending",
+    DepositeStatus: "Pending",
   },
   {
     CheckNumber: "6762359413176657287",
@@ -275,7 +275,7 @@ export const dt: Check[] = [
     DepositeDate: "10/9/2023",
     BankName: "E-Class",
     Client: "Almérinda",
-    DepositeStatus: "notdeposited",
+    DepositeStatus: "Not Deposited",
   },
   {
     CheckNumber: "5100144432212649",
@@ -283,7 +283,7 @@ export const dt: Check[] = [
     DepositeDate: "6/11/2023",
     BankName: "XC70",
     Client: "Rachèle",
-    DepositeStatus: "notdeposited",
+    DepositeStatus: "Not Deposited",
   },
   {
     CheckNumber: "NEW_CHECK_NUMBER",
@@ -291,7 +291,7 @@ export const dt: Check[] = [
     DepositeDate: "NEW_DEPOSIT_DATE",
     BankName: "NEW_BANK_NAME",
     Client: "NEW_CLIENT_NAME",
-    DepositeStatus: "NEW_DEPOSIT_STATUS",
+    DepositeStatus: "Deposited",
   },
 ];
 
