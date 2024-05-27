@@ -28,19 +28,19 @@ export const ClientsColums: ColumnDef<Client>[] = [
         </Button>
       );
     },
-    accessorKey: "Name",
+    accessorKey: "name",
   },
   {
     header: "Address",
-    accessorKey: "Address",
+    accessorKey: "address",
   },
   {
     header: "Phone",
-    accessorKey: "Phone",
+    accessorKey: "phoneNumber",
   },
   {
     header: "Note",
-    accessorKey: "Note",
+    accessorKey: "note",
   },
   {
     header: "Actions",

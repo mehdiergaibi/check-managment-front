@@ -10,6 +10,8 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
+import { Toaster, toast } from "sonner";
+
 import { Label } from "@/components/ui/label";
 import {
   Table,
@@ -20,7 +22,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
@@ -31,7 +33,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { dowloadExcel } from "@/lib/excelCheck";
-import { dt } from "./page";
 import {
   Sheet,
   SheetClose,
@@ -61,31 +62,30 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { getCustomizeClients as allClients } from "@/services/api";
+import { CustomizeClient } from "@/types/CustomizeClient";
+import { addCheck } from "@/services/api";
+import { Check } from "@/types/Check";
+import { getBanks as Banks } from "@/services/api";
+import { Bank } from "@/types/Bank";
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
 const depositeStatus = [
-  { value: "pending", label: "Pending" },
-  { value: "deposited", label: "Deposited" },
-  { value: "not_deposited", label: "Not Deposited" },
-];
-const banks = [
-  { value: "cih", label: "Cih" },
-  { value: "tijari", label: "Ettijari" },
-  { value: "cfg", label: "Cfg" },
-];
-const clients = [
-  { value: "client1", label: "client1" },
-  { value: "client2", label: "client2" },
-  { value: "client3", label: "client3" },
+  { value: "Pending", label: "Pending" },
+  { value: "Deposited", label: "Deposited" },
+  { value: "Not Deposited", label: "Not Deposited" },
 ];
 
 function Checks<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const [checkData, setCheckData] = useState(data);
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFiters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -97,8 +97,96 @@ function Checks<TData, TValue>({
   const [openClient, setOpenClient] = useState(false);
   const [valueClient, setValueClient] = useState("");
 
+  const [banks, setBanks] = useState<Bank[]>([]);
+
+  const [inputAmount, setInputAmount] = useState("");
+  //const [inputDate, setInputDate] = useState("");
+  const [inputNumber, setInputNumber] = useState("");
+
+  const [clients, setClients] = useState<CustomizeClient[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const [openAddToastSucc, setOpenAddtoastSucc] = useState(false);
+  const [openAddToastErr, setOpenAddtoastErr] = useState(false);
+
+  /// handle AddCheck
+  const HandelAddCheck = async () => {
+    const checkToAdd: Check = {
+      ClientName: valueClient,
+      CheckAmount: inputAmount,
+      CheckNumber: inputNumber,
+      DepositDate: date?.toString(),
+      DepositStatus: valueStatus,
+      BankName: valueBank,
+    };
+
+    try {
+      await addCheck(checkToAdd);
+      setCheckData((prevData) => [...prevData, checkToAdd as TData]);
+      setOpenAddtoastSucc(true);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unexpected error");
+      }
+      console.error("Error adding check:", error);
+      setOpenAddtoastErr(true);
+    }
+  };
+
+  // Show success toast
+  useEffect(() => {
+    if (openAddToastSucc) {
+      toast.success("Check added successfully");
+      setOpenAddtoastSucc(false);
+    }
+  }, [openAddToastSucc]);
+
+  // Show error toast
+  useEffect(() => {
+    if (openAddToastErr) {
+      toast.error(error);
+      setOpenAddtoastErr(false);
+    }
+  }, [openAddToastErr]);
+
+  // get banks
+  useEffect(() => {
+    const getBanks = async () => {
+      try {
+        const AllBanks = await Banks();
+        setBanks(AllBanks);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getBanks();
+  }, []);
+
+  // get clients
+  useEffect(() => {
+    const getChecks = async () => {
+      try {
+        const getAllClients: CustomizeClient[] = await allClients();
+        console.log(getAllClients);
+        setClients(getAllClients);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unexpected error");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    getChecks();
+  }, []);
+
   const table = useReactTable({
-    data,
+    data: checkData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -114,8 +202,10 @@ function Checks<TData, TValue>({
       columnVisibility,
     },
   });
+
   return (
     <div>
+      <Toaster richColors />
       <div className="flex items-center justify-between py-4">
         <div className="flex items-center">
           <Input
@@ -129,7 +219,7 @@ function Checks<TData, TValue>({
             }}
           />
           <Button
-            onClick={() => dowloadExcel(dt, "Checks", "Check")}
+            onClick={() => dowloadExcel(checkData, "Checks", "Check")}
             className="ml-4 hidden md:block"
           >
             Export To Excel
@@ -192,8 +282,8 @@ function Checks<TData, TValue>({
                       >
                         {valueClient
                           ? clients.find(
-                              (client) => client.value === valueClient
-                            )?.label
+                              (client) => `${client.name}` === valueClient
+                            )?.name
                           : ""}
                       </Button>
                     </PopoverTrigger>
@@ -206,10 +296,10 @@ function Checks<TData, TValue>({
                         <CommandEmpty>No Client found.</CommandEmpty>
                         <CommandGroup>
                           {clients.map((client) => (
-                            <CommandList>
+                            <CommandList key={client.name}>
                               <CommandItem
-                                key={client.value}
-                                value={client.value}
+                                key={client.name}
+                                value={client.name}
                                 onSelect={(currentValue) => {
                                   setValueClient(
                                     currentValue === valueClient
@@ -219,10 +309,10 @@ function Checks<TData, TValue>({
                                   setOpenClient(false);
                                 }}
                               >
-                                {client.label}
+                                {client.name}
                                 <FaCheck
                                   className={`ml-auto h-4 w-4 ${
-                                    valueBank === client.value
+                                    valueBank === `${client.name}`
                                       ? "opacity-100"
                                       : "opacity-0"
                                   }`}
@@ -243,6 +333,7 @@ function Checks<TData, TValue>({
                     id="check_amount"
                     type="number"
                     className="col-span-3"
+                    onChange={(e) => setInputAmount(e.target.value)}
                   />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
@@ -259,7 +350,11 @@ function Checks<TData, TValue>({
                         )}
                       >
                         <SlCalender className="mr-2 h-4 w-4" />
-                        {date ? format(date, "PPP") : <span>Pick a date</span>}
+                        {date ? (
+                          format(date, "yyyy/MM/dd")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
@@ -300,7 +395,7 @@ function Checks<TData, TValue>({
                         <CommandEmpty>No Deposit Status found.</CommandEmpty>
                         <CommandGroup>
                           {depositeStatus.map((status) => (
-                            <CommandList>
+                            <CommandList key={status.value}>
                               <CommandItem
                                 key={status.value}
                                 value={status.value}
@@ -342,8 +437,7 @@ function Checks<TData, TValue>({
                         className="col-span-3 justify-between"
                       >
                         {valueBank
-                          ? banks.find((bank) => bank.value === valueBank)
-                              ?.label
+                          ? banks.find((bank) => bank.name === valueBank)?.name
                           : ""}
                       </Button>
                     </PopoverTrigger>
@@ -356,23 +450,23 @@ function Checks<TData, TValue>({
                         <CommandEmpty>No Bank found.</CommandEmpty>
                         <CommandGroup>
                           {banks.map((bank) => (
-                            <CommandList>
+                            <CommandList key={bank.name}>
                               <CommandItem
-                                key={bank.value}
-                                value={bank.value}
+                                key={bank.name}
+                                value={bank.name}
                                 onSelect={(currentValue) => {
                                   setValueBank(
                                     currentValue === valueBank
                                       ? ""
                                       : currentValue
                                   );
-                                  setOpenStatus(false);
+                                  setOpenBank(false);
                                 }}
                               >
-                                {bank.label}
+                                {bank.name}
                                 <FaCheck
                                   className={`ml-auto h-4 w-4 ${
-                                    valueBank === bank.value
+                                    valueBank === bank.name
                                       ? "opacity-100"
                                       : "opacity-0"
                                   }`}
@@ -393,12 +487,15 @@ function Checks<TData, TValue>({
                     id="check_number"
                     type="number"
                     className="col-span-3"
+                    onChange={(e) => setInputNumber(e.target.value)}
                   />
                 </div>
               </div>
               <SheetFooter>
                 <SheetClose asChild>
-                  <Button type="submit">Add</Button>
+                  <Button type="submit" onClick={HandelAddCheck}>
+                    Add
+                  </Button>
                 </SheetClose>
               </SheetFooter>
             </SheetContent>

@@ -4,10 +4,10 @@ export function dowloadExcel(dt: any, file: string, sheet: string) {
     {
       sheet: sheet,
       columns: [
-        { label: "Name", value: "Name" },
-        { label: "Address", value: "Address" },
-        { label: "Phone", value: "Phone" },
-        { label: "Note", value: "Note" },
+        { label: "Name", value: "name" },
+        { label: "Address", value: "address" },
+        { label: "Phone", value: "phoneNumber" },
+        { label: "Note", value: "note" },
       ],
       content: dt,
     },

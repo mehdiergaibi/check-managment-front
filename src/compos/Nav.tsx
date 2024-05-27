@@ -15,25 +15,30 @@ const pages = [
     link: "/clients",
   },
   {
-    page: "Banks",
-    link: "/banks",
-  },
-  {
     page: "Statistics",
     link: "/statistics",
+  },
+  {
+    page: "Profie",
+    link: "/profile",
   },
 ];
 
 const Nav = () => {
   const [open, setOpen] = useState<boolean>(false);
   return (
-    <div className="shadow-md w-full sticky top-0 left-0 bg-black">
+    <div className="shadow-md w-full sticky top-0 left-0 bg-black z-30">
       <div className="md:flex items-center justify-between py-4 md:px-10 px-7">
         <div className="font-bold text-2xl cursor-pointer flex items-center font-[Poppins] text-white">
-          <span className="text-3xl mb-1 mr-1 pt-2">
-            <FcMoneyTransfer />
-          </span>
-          CheckWise
+          <Link
+            to="/"
+            className="font-bold text-2xl cursor-pointer flex items-center font-[Poppins] text-white"
+          >
+            <span className="text-3xl mb-1 mr-1 pt-2">
+              <FcMoneyTransfer />
+            </span>
+            CheckWise
+          </Link>
         </div>
 
         <div
@@ -49,7 +54,10 @@ const Nav = () => {
          `}
         >
           {pages.map((page) => (
-            <li key={page.link} className="md:ml-8 text-xl md:my-0 my-7 pr-8">
+            <li
+              key={page.link}
+              className="md:ml-8 text-xl text-center md:my-0 my-7 pr-8"
+            >
               <Link
                 to={page.link}
                 className="text-white hover:text-gray-400 duration-500"
@@ -59,7 +67,7 @@ const Nav = () => {
             </li>
           ))}
           <li>
-            <ThemeToggle className="ml-1 md:ml-4" />
+            <ThemeToggle className="md:ml-8 text-xl text-center md:my-0 my-7 pr-8" />
           </li>
         </ul>
       </div>

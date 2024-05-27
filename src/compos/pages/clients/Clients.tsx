@@ -42,7 +42,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { dowloadExcel } from "@/lib/excelClients";
-import { clients } from "./PageClients";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -86,7 +85,7 @@ function Clients<TData, TValue>({
             }}
           />
           <Button
-            onClick={() => dowloadExcel(clients, "Clients", "Client")}
+            onClick={() => dowloadExcel(data, "Clients", "Client")}
             className="ml-4 hidden md:block"
           >
             Export To Excel

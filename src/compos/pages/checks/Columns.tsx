@@ -5,6 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { RiExpandUpDownFill } from "react-icons/ri";
 import EditCheck from "./EditCheck";
 import { cn } from "@/lib/utils";
+import { deleteCheck } from "@/services/api";
 
 export const CheckColums: ColumnDef<Check>[] = [
   {
@@ -19,7 +20,7 @@ export const CheckColums: ColumnDef<Check>[] = [
         </Button>
       );
     },
-    accessorKey: "Client",
+    accessorKey: "ClientName",
   },
   {
     header: ({ column }) => {
@@ -47,26 +48,26 @@ export const CheckColums: ColumnDef<Check>[] = [
         </Button>
       );
     },
-    accessorKey: "DepositeDate",
+    accessorKey: "DepositDate",
     cell: ({ row }) => {
-      const depositeDate = row.getValue("DepositeDate");
+      const depositeDate = row.getValue("DepositDate");
       const formatted = new Date(depositeDate as string).toLocaleDateString();
       return formatted;
     },
   },
   {
     header: "Deposite Status",
-    accessorKey: "DepositeStatus",
+    accessorKey: "DepositStatus",
     cell: ({ row }) => {
       return (
         <div
           className={cn("font-[16px] text-black w-fit px-4 py-2 rounded-lg", {
-            "bg-red-500": row.getValue("DepositeStatus") === "Not Deposited",
-            "bg-orange-500": row.getValue("DepositeStatus") === "Pending",
-            "bg-green-500": row.getValue("DepositeStatus") === "Deposited",
+            "bg-red-500": row.getValue("DepositStatus") === "Not Deposited",
+            "bg-orange-500": row.getValue("DepositStatus") === "Pending",
+            "bg-green-500": row.getValue("DepositStatus") === "Deposited",
           })}
         >
-          {row.getValue("DepositeStatus")}
+          {row.getValue("DepositStatus")}
         </div>
       );
     },
@@ -81,10 +82,13 @@ export const CheckColums: ColumnDef<Check>[] = [
   },
   {
     header: "Actions",
-    cell: () => {
+    cell: ({ row }) => {
       return (
         <div className="flex">
-          <DeleteDialoge desc="This action cannot be undone. This will permanently delete this check and remove its data from our servers." />
+          <DeleteDialoge
+            hadelDel={deleteCheck(row.getValue("_id"))}
+            desc="This action cannot be undone. This will permanently delete this check and remove its data from our servers."
+          />
           <EditCheck />
         </div>
       );

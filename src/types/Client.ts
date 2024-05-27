@@ -1,6 +1,7 @@
 export type Client = {
-  Name: string;
-  Address: string;
-  Phone: string;
-  Note: string;
+  firstName: string;
+  lastName: string;
+  address: string;
+  phoneNumber: string;
+  note: string;
 };

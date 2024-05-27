@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { AiFillDelete } from "react-icons/ai";
 
-function DeleteDialoge({ desc }: string | any) {
+function DeleteDialoge({ desc, hadelDel }: string | any) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -24,7 +24,7 @@ function DeleteDialoge({ desc }: string | any) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogAction onClick={hadelDel}>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
